@@ -1,8 +1,12 @@
 from django.conf.urls.defaults import *
+from django.views.generic.base import RedirectView
+from django.contrib import admin
 
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
-# admin.autodiscover()
+admin.autodiscover()
+
+from CENSUpdaterServer import uapp
 
 urlpatterns = patterns('uapp.views',
 	(r'^uapp/add_app/(?P<app_str>\w*)$', 'add_app'),
@@ -36,4 +40,5 @@ urlpatterns += patterns('',
         {'template_name': 'login.html'}),
     (r'^uapp/logout/$', 'django.contrib.auth.views.logout',
         {'template_name': 'login.html'}),
+    (r'^$', RedirectView.as_view(url='/static/updater/')),
 )

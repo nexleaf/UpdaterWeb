@@ -13,37 +13,29 @@ If you are unsure which license is appropriate for your use, please contact the 
 
 */
 
-Ext.define('Updater.store.Clients', {
+Ext.define('Updater.store.Applications', {
 	extend: 'Ext.data.Store',
 
     //requires: ['Ext.data.reader.Xml'],
 
-    model: 'Updater.model.Client',
+    model: 'Updater.model.Application',
+
 	proxy: {
 		type: 'ajax',
-		/*noCache: false,
-		extraParams: undefined,
-		limitParam: undefined,
-		pageParam: undefined,
-		groupParam: undefined,
-		sortParam: undefined,
-		startParam: undefined,
-		feedParam: undefined,*/
 		/*actionMethods: {
 			create: 'POST',
 			read: 'POST',
 			update: 'POST',
 			destroy: 'POST'
 		},*/
-		url: '/uproject/uapp/listClients',
+		url: '/updater/uapp/listApps',
 		reader: {
 			type: 'json'
 			//,record: 'item'
 		}
 	},
-	storeId: 'Clients',
 	autoLoad: false,
-	groupField: 'group',
+	//groupField: 'group',
 	listeners: {
 		/*datachanged: {
 			fn: function() {

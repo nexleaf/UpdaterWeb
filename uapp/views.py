@@ -13,7 +13,7 @@ from pytz import timezone
 from haystack.query import SearchQuerySet
 
 
-main_page = 'http://updater.mobilizingcs.org:8080/updater/'
+main_page = 'https://updater.nexleaf.org:8080/static/updater/'
 
 class UserData:
     def __init__(self, user):

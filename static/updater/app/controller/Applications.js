@@ -261,7 +261,7 @@ Ext.define('Updater.controller.Applications', {
 			        var conn = new Ext.data.Connection();
 					conn.request({
 						method: 'POST',
-						url: '/uproject/uapp/delete_app_version/',
+						url: '/updater/uapp/delete_app_version/',
 						params: postParams,
 						success: Ext.bind(function() {
 						
@@ -311,7 +311,7 @@ Ext.define('Updater.controller.Applications', {
 		var conn = new Ext.data.Connection();
 		conn.request({
 			method: 'POST',
-			url: '/uproject/uapp/add_app/',
+			url: '/updater/uapp/add_app/',
 			params: postParams,
 			success: Ext.bind(function(conn, response) {
 				if (conn.responseText == 'Error: Attempting to re-use package name that is already taken by another application.') {
@@ -355,7 +355,7 @@ Ext.define('Updater.controller.Applications', {
 		var conn = new Ext.data.Connection();
 		conn.request({
 			method: 'POST',
-			url: '/uproject/uapp/getAppDetails/',
+			url: '/updater/uapp/getAppDetails/',
 			params: { 'name' : appName, 'release' : releaseName, 'version': versionNumber },
 			success: Ext.bind(function(conn, response) {
 				
@@ -370,7 +370,7 @@ Ext.define('Updater.controller.Applications', {
 				var secondStore = Ext.getCmp('secondGroupGrid').getStore();
 				
 				firstStore.addListener('load', function () {
-					secondStore.proxy.url = '/uproject/uapp/getAppGroups/' + appName + '/' + releaseName + '/' + versionNumber;
+					secondStore.proxy.url = '/updater/uapp/getAppGroups/' + appName + '/' + releaseName + '/' + versionNumber;
 					
 					secondStore.addListener('load', function () {
 						// Remove intersection of two stores
@@ -400,7 +400,7 @@ Ext.define('Updater.controller.Applications', {
 		// previously enabled
 		this.getAppProperties().setDisabled(true);
 		
-		var appurl = '/uproject/uapp/getReleaseVersions/'+ this.getAppComboBox().getRawValue() + '/' + combo.getRawValue();
+		var appurl = '/updater/uapp/getReleaseVersions/'+ this.getAppComboBox().getRawValue() + '/' + combo.getRawValue();
 		this.getVersionComboBox().getStore().proxy.url = appurl;
 		this.getVersionComboBox().getStore().load();
 		Ext.getCmp('versionContainer').setDisabled(false);
@@ -416,7 +416,7 @@ Ext.define('Updater.controller.Applications', {
 		
 		this.getReleaseComboBox().getStore().removeAll();
 		this.getReleaseComboBox().setRawValue('');
-		var appurl = '/uproject/uapp/getAppReleases/'+ combo.getRawValue();
+		var appurl = '/updater/uapp/getAppReleases/'+ combo.getRawValue();
 		this.getReleaseComboBox().getStore().proxy.url = appurl;
 		this.getReleaseComboBox().getStore().load();
 		

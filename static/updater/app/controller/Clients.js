@@ -113,7 +113,7 @@ Ext.define('Updater.controller.Clients', {
 					update: 'POST',
 					destroy: 'POST'
 				},
-				url: '/uproject/uapp/listClients/',
+				url: '/updater/uapp/listClients/',
 				reader: {
 					type: 'json'
 				}
@@ -156,7 +156,7 @@ Ext.define('Updater.controller.Clients', {
 					update: 'POST',
 					destroy: 'POST'
 				},
-				url: '/uproject/uapp/listClients/',
+				url: '/updater/uapp/listClients/',
 				reader: {
 					type: 'json'
 				}
@@ -215,7 +215,7 @@ Ext.define('Updater.controller.Clients', {
 						    model: 'Updater.model.Application',
 							proxy: {
 								type: 'ajax',
-								url: '/uproject/uapp/listApps',
+								url: '/updater/uapp/listApps',
 								reader: {
 									type: 'json'
 								}
@@ -232,7 +232,7 @@ Ext.define('Updater.controller.Clients', {
 						    model: 'Updater.model.Application',
 							proxy: {
 								type: 'ajax',
-								url: '/uproject/uapp/listApps',
+								url: '/updater/uapp/listApps',
 								reader: {
 									type: 'json'
 								}
@@ -243,7 +243,7 @@ Ext.define('Updater.controller.Clients', {
 							model: 'Updater.model.Group',
 							proxy: {
 								type: 'ajax',
-								url: '/uproject/uapp/listGroups',
+								url: '/updater/uapp/listGroups',
 								reader: {
 									type: 'json'
 								}
@@ -272,7 +272,7 @@ Ext.define('Updater.controller.Clients', {
 				        var conn = new Ext.data.Connection();
 						conn.request({
 							method: 'POST',
-							url: '/uproject/uapp/batchEditClients/false',
+							url: '/updater/uapp/batchEditClients/false',
 							params: postParams,
 							success: Ext.bind(function(conn, request) {
 								// Close the client details window
@@ -352,7 +352,7 @@ Ext.define('Updater.controller.Clients', {
 														var conn = new Ext.data.Connection();
 														conn.request({
 															method: 'POST',
-															url: '/uproject/uapp/batchEditClients/true',
+															url: '/updater/uapp/batchEditClients/true',
 															params: postParams,
 															success: Ext.bind(function(conn, request) {
 																resultsWindow.close();
@@ -380,7 +380,7 @@ Ext.define('Updater.controller.Clients', {
 										var connx = new Ext.data.Connection();
 										connx.request({
 											method: 'POST',
-											url: '/uproject/uapp/batchEditClients/true',
+											url: '/updater/uapp/batchEditClients/true',
 											params: postParams,
 											success: Ext.bind(function(connx, request) {
 												//resultsWindow.close();
@@ -461,7 +461,7 @@ Ext.define('Updater.controller.Clients', {
 						        var conn = new Ext.data.Connection();
 								conn.request({
 									method: 'POST',
-									url: '/uproject/uapp/batchEditClients/',
+									url: '/updater/uapp/batchEditClients/',
 									params: postParams,
 									success: Ext.bind(function() {
 										// Close the client details window
@@ -564,7 +564,7 @@ Ext.define('Updater.controller.Clients', {
 				        var conn = new Ext.data.Connection();
 						conn.request({
 							method: 'POST',
-							url: '/uproject/uapp/deleteClients/',
+							url: '/updater/uapp/deleteClients/',
 							params: postParams,
 							success: Ext.bind(function() {
 
@@ -593,7 +593,7 @@ Ext.define('Updater.controller.Clients', {
 							model: 'Updater.model.Application',
 							proxy: {
 								type: 'ajax',
-								url: '/uproject/uapp/getGroupApps/Unmanaged',
+								url: '/updater/uapp/getGroupApps/Unmanaged',
 								reader: {
 									type: 'json'
 								}
@@ -625,7 +625,7 @@ Ext.define('Updater.controller.Clients', {
 											this.appstore.addListener('load', function () {
 
 												// Load the selected apps for the newly selected group
-												this.inheritedapps.proxy.url = '/uproject/uapp/getGroupApps/' + selectedGroup;
+												this.inheritedapps.proxy.url = '/updater/uapp/getGroupApps/' + selectedGroup;
 
 												this.inheritedapps.addListener('load', function () {
 													
@@ -674,7 +674,7 @@ Ext.define('Updater.controller.Clients', {
 		    model: 'Updater.model.Application',
 			proxy: {
 				type: 'ajax',
-				url: '/uproject/uapp/listApps',
+				url: '/updater/uapp/listApps',
 				reader: {
 					type: 'json'
 				}
@@ -695,7 +695,7 @@ Ext.define('Updater.controller.Clients', {
 					model: 'Updater.model.Log',
 					proxy: {
 						type: 'ajax',
-						url: '/uproject/uapp/getClientLogs/' + client.get('imei'),
+						url: '/updater/uapp/getClientLogs/' + client.get('imei'),
 						reader: {
 							type: 'json'
 							//,record: 'item'
@@ -709,7 +709,7 @@ Ext.define('Updater.controller.Clients', {
 							model: 'Updater.model.Application',
 							proxy: {
 								type: 'ajax',
-								url: '/uproject/uapp/getGroupApps/' + client.get('group'),
+								url: '/updater/uapp/getGroupApps/' + client.get('group'),
 								reader: {
 									type: 'json'
 								}
@@ -745,11 +745,11 @@ Ext.define('Updater.controller.Clients', {
 											panel.setLoading(true);
 											this.appstore.addListener('load', function () {
 												
-												this.selectedapps.proxy.url = '/uproject/uapp/getClientApps/' + client.get('imei');
+												this.selectedapps.proxy.url = '/updater/uapp/getClientApps/' + client.get('imei');
 
 												this.selectedapps.addListener('load', function () {
 													
-													this.inheritedapps.proxy.url = '/uproject/uapp/getGroupApps/' + selectedGroup;
+													this.inheritedapps.proxy.url = '/updater/uapp/getGroupApps/' + selectedGroup;
 													
 													this.inheritedapps.addListener('load', function () {
 														
@@ -802,7 +802,7 @@ Ext.define('Updater.controller.Clients', {
 				model: 'Updater.model.Application',
 				proxy: {
 					type: 'ajax',
-					url: '/uproject/uapp/getClientApps/' + client.get('imei'),
+					url: '/updater/uapp/getClientApps/' + client.get('imei'),
 					reader: {
 						type: 'json'
 						//,record: 'item'
@@ -820,7 +820,7 @@ Ext.define('Updater.controller.Clients', {
 		    model: 'Updater.model.Application',
 			proxy: {
 				type: 'ajax',
-				url: '/uproject/uapp/listApps',
+				url: '/updater/uapp/listApps',
 				reader: {
 					type: 'json'
 				}

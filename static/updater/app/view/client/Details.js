@@ -170,7 +170,7 @@ Ext.define('Updater.view.client.Details', {
 					update: 'POST',
 					destroy: 'POST'
 				},*/
-				url: '/uproject/uapp/getClientTags/'+this.imei,
+				url: '/updater/uapp/getClientTags/'+this.imei,
 				reader: {
 					type: 'json'
 					//,record: 'item'
@@ -416,7 +416,7 @@ Ext.define('Updater.view.client.Details', {
 				        var conn = new Ext.data.Connection();
 						conn.request({
 							method: 'POST',
-							url: '/uproject/uapp/add_user/',
+							url: '/updater/uapp/add_user/',
 							params: postParams,
 							success: Ext.bind(function() {
 								// Close the client details window

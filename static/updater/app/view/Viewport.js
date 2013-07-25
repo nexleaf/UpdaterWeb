@@ -38,7 +38,7 @@ Ext.define('Updater.view.Viewport', {
 			style: {
 				color: '#888888'
 			},
-			html: '<b>MobilizeLabs Updater</b>',
+			html: '<b>Updater</b>',
 			width: 200,
 			margin: '3 3 3 6'
 		},{
@@ -46,12 +46,12 @@ Ext.define('Updater.view.Viewport', {
 			region: 'center'
 		},{
 			xtype: 'box',
-			html: '<a href="/uproject/uapp/logout">logout</a>',
+			html: '<a href="/updater/uapp/logout">logout</a>',
 			region: 'east',
 			margin: '3 6 3 3'
 		}]
 		/*xtype: 'box',
-		html: '<h1 class="x-panel-header">MobilizeLabs Updater</h1>',
+		html: '<h1 class="x-panel-header">Updater</h1>',
         //autoHeight: true,
         border: false,
         margins: '0 0 0 0'*/

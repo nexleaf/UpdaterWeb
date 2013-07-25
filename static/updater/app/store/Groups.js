@@ -28,7 +28,7 @@ Ext.define('Updater.store.Groups', {
 			update: 'POST',
 			destroy: 'POST'
 		},*/
-		url: '/uproject/uapp/listGroups',
+		url: '/updater/uapp/listGroups',
 		reader: {
 			type: 'json'
 			//,record: 'item'

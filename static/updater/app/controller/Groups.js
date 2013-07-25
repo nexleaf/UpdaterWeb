@@ -79,7 +79,7 @@ Ext.define('Updater.controller.Groups', {
 			        var conn = new Ext.data.Connection();
 					conn.request({
 						method: 'POST',
-						url: '/uproject/uapp/delete_group/',
+						url: '/updater/uapp/delete_group/',
 						params: postParams,
 						success: Ext.bind(function() {
 						
@@ -145,7 +145,7 @@ Ext.define('Updater.controller.Groups', {
         var conn = new Ext.data.Connection();
 		conn.request({
 			method: 'POST',
-			url: '/uproject/uapp/add_group/',
+			url: '/updater/uapp/add_group/',
 			params: postParams,
 			success: Ext.bind(function() {
 				
@@ -228,7 +228,7 @@ Ext.define('Updater.controller.Groups', {
 				model: 'Updater.model.Application',
 				proxy: {
 					type: 'ajax',
-					url: '/uproject/uapp/getGroupApps/' + selectedGroup,
+					url: '/updater/uapp/getGroupApps/' + selectedGroup,
 					reader: {
 						type: 'json'
 						//,record: 'item'

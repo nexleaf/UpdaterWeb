@@ -26,8 +26,8 @@ Ext.define('Updater.view.Viewer', {
     cls: 'preview',
     
     initComponent: function() {
-		var loginURL = "http://updater.mobilizingcs.org/uproject/uapp/login/";
-		var checkLoggedInURL = "http://updater.mobilizingcs.org/uproject/uapp/listAppNames/";
+		var loginURL = "https://updater.nexleaf.org:8080/updater/uapp/login/";
+		var checkLoggedInURL = "https://updater.nexleaf.org:8080/updater/uapp/listAppNames/";
 		// Check to make sure we are logged-in
 		//  If we are not logged in, redirect to the login page
 		Ext.Ajax.request({

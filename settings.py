@@ -10,12 +10,22 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-DATABASE_NAME = 'william'             # Or path to database file if using sqlite3.
-DATABASE_USER = 'william'             # Not used with sqlite3.
-DATABASE_PASSWORD = 'will123'         # Not used with sqlite3.
-DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
-DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+#DATABASE_ENGINE = 'mysql'           # 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+#DATABASE_NAME = 'william'             # Or path to database file if using sqlite3.
+#DATABASE_USER = 'william'             # Not used with sqlite3.
+#DATABASE_PASSWORD = 'will123'         # Not used with sqlite3.
+#DATABASE_HOST = ''             # Set to empty string for localhost. Not used with sqlite3.
+#DATABASE_PORT = ''             # Set to empty string for default. Not used with sqlite3.
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': '',                      # Or path to database file if using sqlite3.
+        'USER': '',                      # Not used with sqlite3.
+        'PASSWORD': '',                  # Not used with sqlite3.
+        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -52,7 +62,7 @@ MEDIA_URL = ''
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+#ADMIN_MEDIA_PREFIX = '/media/'
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'hnul6--vmb(3j5v!61w^4-vjevy8xm6tqb56#bc216!nw-nl-%'
@@ -95,14 +105,27 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 )
 
-HAYSTACK_SITECONF = 'uapp.search_sites'
+#HAYSTACK_SITECONF = 'uapp.search_sites'
 #HAYSTACK_SEARCH_ENGINE = 'xapian'
 #HAYSTACK_XAPIAN_PATH = '/home/william/xapian'
 #HAYSTACK_SEARCH_ENGINE = 'simple'
-HAYSTACK_SEARCH_ENGINE = 'whoosh'
-HAYSTACK_WHOOSH_PATH = '/home/william/whoosh'
+#HAYSTACK_SEARCH_ENGINE = 'whoosh'
+#HAYSTACK_CONNECTIONS = 'whoosh'
+#HAYSTACK_WHOOSH_PATH = '/home/william/whoosh'
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'PATH': os.path.join(os.path.dirname(__file__), 'whoosh_index'),
+    },
+}
 
 LOGIN_URL = '/uproject/uapp/login/'
 LOGOUT_URL = '/uproject/uapp/logout/'
 LOGIN_REDIRECT_URL = '/uproject/media/updater/'
 CACHE_BACKEND = 'db://listclient_cache'
+
+try:
+    from settings_local import *
+except ImportError:
+   pass
+

@@ -1,6 +1,7 @@
 import datetime
-from haystack.indexes import *
-from haystack import site
+#from haystack.indexes import *
+#from haystack import site
+from haystack import indexes
 from uapp.models import User
 from uapp.models import Group
 from uapp.models import App
@@ -13,16 +14,19 @@ import simplejson
 #  Note that the whoosh index path and all the files contained within it MUST have the same
 #  owner and group as the Apache service that Django runs on. Otherwise there will be file
 #  permission errors when the Whoosh index is rebuilt on-the-fly.
-class UserIndex(RealTimeSearchIndex):
-	text = CharField(document=True, use_template=True)
-	name = CharField(model_attr='name')
-	imei = CharField(model_attr='imei')
-	group = CharField(use_template=True)
-	group_apps = CharField(use_template=True)
-	user_apps = CharField(use_template=True)
+class UserIndex(indexes.SearchIndex, indexes.Indexable):
+	text = indexes.CharField(document=True, use_template=True)
+	name = indexes.CharField(model_attr='name')
+	imei = indexes.CharField(model_attr='imei')
+	group = indexes.CharField(use_template=True)
+	group_apps = indexes.CharField(use_template=True)
+	user_apps = indexes.CharField(use_template=True)
 	
-	phone_tags = CharField()
-	manual_tags = CharField()
+	phone_tags = indexes.CharField()
+	manual_tags = indexes.CharField()
+	
+	def get_model(self):
+		return UserIndex
 	
 	def prepare_phone_tags(self, object):
 		parsed = '\n'
@@ -40,4 +44,3 @@ class UserIndex(RealTimeSearchIndex):
 			parsed += '\n' + tag['value'] + '\n'
 		return parsed + '\n\n'
 	
-site.register(User, UserIndex)

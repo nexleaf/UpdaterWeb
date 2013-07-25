@@ -47,7 +47,7 @@ Ext.define('Updater.view.application.Window', {
 									    		model: 'Updater.model.Application',
 												proxy: {
 													type: 'ajax',
-													url: '/uproject/uapp/listAppNames',
+													url: '/updater/uapp/listAppNames',
 													reader: {
 														type: 'json'
 													}
@@ -187,7 +187,7 @@ Ext.define('Updater.view.application.Window', {
 									model: 'Updater.model.Group',
 									proxy: {
 										type: 'ajax',
-										url: '/uproject/uapp/listGroups',
+										url: '/updater/uapp/listGroups',
 										reader: {
 											type: 'json'
 										}
@@ -225,7 +225,7 @@ Ext.define('Updater.view.application.Window', {
 									model: 'Updater.model.Group',
 									proxy: {
 										type: 'ajax',
-										url: '/uproject/uapp/getAppGroups/',
+										url: '/updater/uapp/getAppGroups/',
 										reader: {
 											type: 'json'
 										}
