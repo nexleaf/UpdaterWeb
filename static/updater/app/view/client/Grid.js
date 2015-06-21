@@ -42,7 +42,8 @@ Ext.define('Updater.view.client.Grid', {
 	//multiSelect: true,
 	features: [Ext.create('Ext.grid.feature.Grouping', {
 	        	groupHeaderTpl: 'Group: {name} ({rows.length} Client{[values.rows.length > 1 ? "s" : ""]})',
-				id : 'gridGrouper'
+				id : 'gridGrouper',
+                startCollapsed: true
 			}),	{
 			ftype: 'filters',
 			encode: true,

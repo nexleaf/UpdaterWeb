@@ -53,34 +53,43 @@
 
 
     <table bgcolor="#e0e0e0" border="1" width="50%" 
-        cellspacing="10" rules=rows>
+        cellspacing="10" cellpadding="10" rules=rows>
     <tbody>
     <tr>
-        <td width="30%">
+        <td width="20%">
             <font size="4"><strong>IMEI</strong></font>
         </td>
-        <td width="50%">
+        <td width="30%">
             <font size="4"><strong>Access Time</strong></font>
         </td>
 
-        <td width="20%">
+        <td width="10%">
             <font size="4"><strong>Access Count</strong></font>
+        </td>
+        <td width="20%">
+            <font size="4"><strong>Set Conf</strong></font>
+        </td>
+        <td width="20%">
+            <font size="4"><strong>Reported</strong></font>
         </td>
     </tr>
 
     {% for log in logs %}
     <tr>
         <td> 
-            <a
-                href="../add_user/{{log.imei}}">
-            {{log.imei}}
-        </a>
+            <a href="https://updater.nexleaf.org/updater/uapp/logs/{{log.imei}}">{{log.imei}}</a>
         </td>
         <td>
             {{log.time}}
         </td>
         <td>
             {{log.count}}
+        </td>
+        <td>
+           {{log.setconf}} 
+        </td>
+        <td>
+           {{log.reported}}
         </td>
 
     </tr>

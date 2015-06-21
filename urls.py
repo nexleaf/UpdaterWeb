@@ -24,15 +24,17 @@ urlpatterns = patterns('uapp.views',
 	(r'^uapp/delete_group/$', 'delete_group'),
 	(r'^uapp/delete_app_version/$', 'delete_app_version'),
 	(r'^uapp/getAppReleases/(?P<appname>\w*)$', 'getAppReleases'),
-	(r'^uapp/getReleaseVersions/(?P<appname>\w*)/(?P<release>\w*)$', 'getReleaseVersions'),
+	(r'^uapp/getReleaseVersions/(?P<appname>\w*)/(?P<release>[a-zA-Z0-9_\-.]*)$', 'getReleaseVersions'),
 	(r'^uapp/getAppDetails/$', 'getAppDetails'),
-	(r'^uapp/getAppGroups/(?P<appname>\w*)/(?P<release>\w*)/(?P<version>\w*)$', 'getAppGroups'),
+	(r'^uapp/getAppGroups/(?P<appname>\w*)/(?P<release>[a-zA-Z0-9_\-.]*)/(?P<version>\w*)$', 'getAppGroups'),
 	(r'^uapp/batchEditClients/(?P<validated>\w*)$', 'batchEditClients'),
 	(r'^uapp/get/(?P<imei>\w*)$', 'get'),
 	(r'^uapp/register/', 'register'),
 	
 	# Needs to be re-written for data model change
 	(r'^uapp/logs/$', 'logs'),
+        (r'^uapp/logs/(?P<imei>\w+)$', 'logs_imei'),
+        (r'^uapp/logs/group/(?P<group>\w+)$', 'logs_group'),
 )
 
 urlpatterns += patterns('',

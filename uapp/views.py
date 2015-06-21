@@ -13,7 +13,7 @@ from pytz import timezone
 from haystack.query import SearchQuerySet
 
 
-main_page = 'https://updater.nexleaf.org:8080/static/updater/'
+main_page = 'https://updater.nexleaf.org/static/updater/'
 
 class UserData:
     def __init__(self, user):
@@ -52,10 +52,12 @@ class GroupData:
 
 
 class LogRecord:
-    def __init__(self, imei, dt, count):
+    def __init__(self, imei, dt, count, setconf, reported):
         self.imei = imei
         self.time = dt
         self.count = count
+        self.setconf = setconf
+        self.reported = reported
 			
 def local_time_str(naive_t):
     utc_t = naive_t.replace(tzinfo = timezone('UTC'))
@@ -836,7 +838,7 @@ def getAppDetails(request):
 	
 	return HttpResponse(simplejson.dumps(details), mimetype='application/javascript')
 	
-@login_required
+#@login_required
 def add_user(request, imei):
     t = loader.get_template('user.html')
 
@@ -1153,16 +1155,82 @@ def logs(request):
 
     logs = list()
 
-    for u in User.objects.all():
+    for u in User.objects.all().order_by("-imei"):
         log_q = Logs.objects.filter(imei__exact = u.imei)
-        log_q = log_q.order_by('access')
+        log_q = log_q.order_by('-access')
         count = log_q.count()
+        reported = ""
         if count > 0:
-            access =  local_time_str(log_q.all()[count - 1].access)
+            access =  local_time_str(log_q.all()[0].access)
+            reported = log_q[0].packages
         else:
             access = 'No record'
-        
-        logs.append(LogRecord(u.imei, access , count))
+        setconf = ""
+        for grp in u.group.all():
+            for ap in grp.apps.all():
+                setconf += "" + ap.package + ":" + str(ap.ver) + ", "
+        logs.append(LogRecord(u.imei, access , count, setconf, reported))
+
+    c = Context({'logs' : logs,
+                 'message' : 'Client access log'
+                 })
+    
+    return HttpResponse(t.render(c))
+
+@login_required
+def logs_group(request, group=None):
+    t = loader.get_template('logs.html')
+
+    logs = list()
+    thegroup = Group.objects.get(name__exact=group)
+    for u in User.objects.filter(group__exact=thegroup).order_by("-imei"):
+        log_q = Logs.objects.filter(imei__exact = u.imei)
+        log_q = log_q.order_by('-access')
+        count = log_q.count()
+        reported = ""
+        if count > 0:
+            access =  local_time_str(log_q.all()[0].access)
+            reported = log_q[0].packages
+        else:
+            access = 'No record'
+        setconf = ""
+        for grp in u.group.all():
+            for ap in grp.apps.all():
+                setconf += "" + ap.package + ":" + str(ap.ver) + ", "
+        logs.append(LogRecord(u.imei, access , count, setconf, reported))
+    
+    c = Context({'logs' : logs,
+                 'message' : 'Client access log'
+                 })
+    
+    return HttpResponse(t.render(c))
+
+
+@login_required
+def logs_imei(request, imei=None):
+    t = loader.get_template('logs.html')
+
+    logs = list()
+    u = User.objects.get(imei__exact = imei)
+    log_q = Logs.objects.filter(imei__exact = imei)
+    log_q = log_q.order_by('-access')
+    count = log_q.count()
+    reported = ""
+    access = 'No record'
+    if count > 100:
+        limit = 90
+    else:
+        limit = count
+    count = 0
+    while count < limit:
+        access =  local_time_str(log_q[count].access)
+        reported = log_q[count].packages
+        setconf = ""
+        for grp in u.group.all():
+            for ap in grp.apps.all():
+                setconf += "" + ap.package + ":" + str(ap.ver) + ", "
+        logs.append(LogRecord(imei, access, count, setconf, reported))
+        count = count + 1
 
     c = Context({'logs' : logs,
                  'message' : 'Client access log'
