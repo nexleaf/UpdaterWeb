@@ -1,4 +1,4 @@
-from django.conf.urls.defaults import *
+from django.conf.urls import patterns, url, include
 from django.views.generic.base import RedirectView
 from django.contrib import admin
 
@@ -6,7 +6,7 @@ from django.contrib import admin
 # from django.contrib import admin
 admin.autodiscover()
 
-from CENSUpdaterServer import uapp
+import uapp
 
 urlpatterns = patterns('uapp.views',
 	(r'^uapp/add_app/(?P<app_str>\w*)$', 'add_app'),
@@ -38,9 +38,14 @@ urlpatterns = patterns('uapp.views',
 )
 
 urlpatterns += patterns('',
-    (r'^uapp/login/$', 'django.contrib.auth.views.login',
-        {'template_name': 'login.html'}),
+    (r'^login/$', 'django.contrib.auth.views.login',
+        {'template_name': 'login1.html'}),
     (r'^uapp/logout/$', 'django.contrib.auth.views.logout',
         {'template_name': 'login.html'}),
-    (r'^$', RedirectView.as_view(url='/static/updater/')),
+    (r'^$', 'uapp.views.login_user'),
+    (r'^clients/$', 'uapp.views.show_clients'),
+    (r'^groups/$', 'uapp.views.show_groups'),
+    (r'^applications/$', 'uapp.views.show_applications'),
+    (r'^logs/$', 'uapp.views.show_logs'),
+    
 )

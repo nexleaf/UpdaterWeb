@@ -127,6 +127,7 @@ INSTALLED_APPS = (
     'uapp',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
+    'widget_tweaks',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

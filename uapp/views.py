@@ -14,6 +14,8 @@ from haystack.query import SearchQuerySet
 
 
 main_page = 'https://updater.nexleaf.org/static/updater/'
+login_page = 'http://localhost:8000/login/'
+
 
 class UserData:
     def __init__(self, user):
@@ -58,7 +60,47 @@ class LogRecord:
         self.count = count
         self.setconf = setconf
         self.reported = reported
-			
+		
+
+def login_user(request):
+	print request.method
+	if request.user.is_authenticated():
+		t = loader.get_template('index.html')
+		c = RequestContext(request)
+		return HttpResponse(t.render(c))
+	
+		# response = HttpResponse("{'result': 'success'}")
+		# return response
+	else:
+		# response = HttpResponse("{'result': 'login please'}")
+		# return response
+		return HttpResponseRedirect(login_page)
+	# r_username = request.POST.get("username")
+	# r_password = request.POST.get("password")
+	# # print username, password
+	# response = HttpResponse("{'result': 'success'}")
+	# return response
+
+def show_groups(request):
+	t = loader.get_template('groups.html')
+	c = RequestContext(request)
+	return HttpResponse(t.render(c))
+
+def show_clients(request):
+	t = loader.get_template('clients.html')
+	c = RequestContext(request)
+	return HttpResponse(t.render(c))
+
+def show_applications(request):
+	t = loader.get_template('applications.html')
+	c = RequestContext(request)
+	return HttpResponse(t.render(c))
+
+def show_logs(request):
+	t = loader.get_template('logs1.html')
+	c = RequestContext(request)
+	return HttpResponse(t.render(c))
+
 def local_time_str(naive_t):
     utc_t = naive_t.replace(tzinfo = timezone('UTC'))
     local_t = utc_t.astimezone(timezone('US/Pacific'))
