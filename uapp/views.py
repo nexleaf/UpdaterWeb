@@ -11,6 +11,8 @@ import simplejson
 import datetime
 from pytz import timezone
 from haystack.query import SearchQuerySet
+from django.shortcuts import render_to_response
+from uapp.forms import UserForm, GroupForm, ApplicationForm
 
 
 main_page = 'https://updater.nexleaf.org/static/updater/'
@@ -61,6 +63,42 @@ class LogRecord:
         self.setconf = setconf
         self.reported = reported
 		
+def search_imeis_groups(request):
+	# imeis = SearchQuerySet().autocomplete(content_auto=request.POST.get('search_text',''))
+	# return render_to_response('ajax_search.html',{'imeis':imeis})
+	if request.method == "POST":
+		search_text = request.POST['search_text']
+	else:
+		search_text=''
+	print search_text
+	groups = Group.objects.filter(user__imei__startswith=search_text)
+	groups=set(groups)
+	grouplist=list()
+	for g in groups:
+		#user_count = User.objects.filter(group__exact = g).count() 
+		#if user_count == 0:
+		#	g.delete()
+		#else:
+		#	grouplist.append({'name': g.name})
+		user_count = User.objects.filter(group__name=g.name).count()
+		app_count = App.objects.filter(group__name=g.name).count()
+		grouplist.append({'name': g.name, 'desc': g.desc, 'user_count':user_count,'app_count':app_count})
+		
+	
+	return render_to_response('ajax_search.html',{'grouplist':grouplist})
+
+def search_imeis(request):
+	print "$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$"
+	# imeis = SearchQuerySet().autocomplete(content_auto=request.POST.get('search_text',''))
+	# return render_to_response('ajax_search.html',{'imeis':imeis})
+	if request.method == "POST":
+		search_text = request.POST['search_text']
+	else:
+		search_text=''
+	print search_text
+	users = User.objects.filter(imei__startswith=search_text)	
+	return render_to_response('ajax_search_imei.html',{'users':users})
+
 
 def login_user(request):
 	print request.method
@@ -82,19 +120,61 @@ def login_user(request):
 	# return response
 
 def show_groups(request):
-	t = loader.get_template('groups.html')
-	c = RequestContext(request)
-	return HttpResponse(t.render(c))
+	grouplist = list()
+	for g in Group.objects.all():
+		#user_count = User.objects.filter(group__exact = g).count() 
+		#if user_count == 0:
+		#	g.delete()
+		#else:
+		#	grouplist.append({'name': g.name})
+		user_count = User.objects.filter(group__name=g.name).count()
+		app_count = App.objects.filter(group__name=g.name).count()
+		grouplist.append({'name': g.name, 'desc': g.desc, 'user_count':user_count,'app_count':app_count})
+		
+	# json = simplejson.dumps(grouplist)
+	# t = loader.get_template('show_clients.html')
+	# c = RequestContext(request, { 'json':json})
+	# return HttpResponse(t.render(c))
+
+	return render_to_response('show_groups.html',{"grouplist": grouplist, 'form':GroupForm()})
 
 def show_clients(request):
-	t = loader.get_template('clients.html')
-	c = RequestContext(request)
-	return HttpResponse(t.render(c))
+	grouplist = list()
+	for g in Group.objects.all():
+		#user_count = User.objects.filter(group__exact = g).count() 
+		#if user_count == 0:
+		#	g.delete()
+		#else:
+		#	grouplist.append({'name': g.name})
+		user_count = User.objects.filter(group__name=g.name).count()
+		app_count = App.objects.filter(group__name=g.name).count()
+		grouplist.append({'name': g.name, 'desc': g.desc, 'user_count':user_count,'app_count':app_count})
+		
+	# json = simplejson.dumps(grouplist)
+	# t = loader.get_template('show_clients.html')
+	# c = RequestContext(request, { 'json':json})
+	# return HttpResponse(t.render(c))
+
+	return render_to_response('show_clients_in_groups.html',{"grouplist": grouplist,'form':UserForm()})
 
 def show_applications(request):
-	t = loader.get_template('applications.html')
-	c = RequestContext(request)
-	return HttpResponse(t.render(c))
+	applist = list()
+	for a in App.objects.all():
+		#user_count = User.objects.filter(group__exact = g).count() 
+		#if user_count == 0:
+		#	g.delete()
+		#else:
+		#	grouplist.append({'name': g.name})
+		if a.name not in [x['name'] for x in applist]:
+			group_count = Group.objects.filter(apps__name=a.name).count()
+			applist.append({'name': a.name,'group_count':group_count})
+		
+	# json = simplejson.dumps(grouplist)
+	# t = loader.get_template('show_clients.html')
+	# c = RequestContext(request, { 'json':json})
+	# return HttpResponse(t.render(c))
+
+	return render_to_response('show_application_names.html',{"applist": applist,'form':ApplicationForm()})
 
 def show_logs(request):
 	t = loader.get_template('logs1.html')
@@ -139,6 +219,18 @@ def getAppData(app):
 
     return obj
 
+def group_details(request, groupname):
+	# print groupname
+	groupname =request.GET.get('groupname','')
+	print groupname
+	group = Group.objects.filter(name=groupname)[0]
+	result={}
+	result['name']=group.name
+	result['desc']=group.desc
+	
+	result_json = simplejson.dumps(result)
+	# result['descr']=group.descr
+	return HttpResponse(result_json, content_type='application/javascript')
 
 def findGroup(group_name, user):
     group_q = Group.objects.filter(name__exact = group_name)
@@ -507,7 +599,7 @@ def listClients(request):
 		cache.set('clientjson', clientjson, 60*60*24)
 	
 	# Return the data to the user
-	return HttpResponse(clientjson, mimetype='application/javascript')
+	return HttpResponse(clientjson, content_type='application/javascript')
 
 @login_required
 def listApps(request):
@@ -530,7 +622,7 @@ def listApps(request):
 						 'release': a.release,
 						 'name': a.name})
 	json = simplejson.dumps(appslist)
-	return HttpResponse(json, mimetype='application/javascript')
+	return HttpResponse(json, content_type='application/javascript')
 	
 @login_required
 def listAppNames(request):
@@ -551,7 +643,7 @@ def listAppNames(request):
 							 'release': a.release,
 							 'name': a.name})
 	json = simplejson.dumps(appslist)
-	return HttpResponse(json, mimetype='application/javascript')
+	return HttpResponse(json)
 	
 @login_required
 def listGroups(request):
@@ -565,14 +657,14 @@ def listGroups(request):
 		grouplist.append({'name': g.name, 'desc': g.desc})
 		
 	json = simplejson.dumps(grouplist)
-	return HttpResponse(json, mimetype='application/javascript')
+	return HttpResponse(json, content_type='application/javascript')
 
 @login_required
 def getClientTags(request, imei):
 	users = User.objects.filter(imei__exact = imei)
 	if len(users) > 0:
 		myuser = User.objects.filter(imei__exact = imei)[0]
-		return HttpResponse(myuser.manual_tags, mimetype='application/javascript')
+		return HttpResponse(myuser.manual_tags, content_type='application/javascript')
 	else:
 		return HttpResponse('[]')
 
@@ -600,7 +692,7 @@ def getClientApps(request, imei):
 		#userinfo = {'imei' : myuser.imei, 'applications' : userapps, 'group' : myuser.group.all()[0].name}
 		
 		json = simplejson.dumps(userapps)
-	return HttpResponse(json, mimetype='application/javascript')
+	return HttpResponse(json, content_type='application/javascript')
 	
 @login_required
 def getClientLogs(request, imei):
@@ -623,7 +715,7 @@ def getClientLogs(request, imei):
 			})
 	
 		json = simplejson.dumps(json)
-		return HttpResponse(json, mimetype='application/javascript')
+		return HttpResponse(json, content_type='application/javascript')
 	else:
 		return HttpResponse('[]')
 
@@ -660,10 +752,15 @@ def getGroupApps(request, groupname):
 							 'name': app.name})
 			
 	
-		return HttpResponse(simplejson.dumps(defaultappslist), mimetype='application/javascript')
+		return HttpResponse(simplejson.dumps(defaultappslist), content_type='application/javascript')
 		
 	else:
 		return HttpResponse('[]')
+@login_required
+def getGroupClients(request, groupname):
+	user_list = User.objects.filter(group__name=groupname)
+	return render_to_response('show_clients.html',{"user_list": user_list})
+
 
 @login_required
 def getAppGroups(request, appname, release, version):
@@ -675,7 +772,7 @@ def getAppGroups(request, appname, release, version):
 	for group in Group.objects.filter(apps__name__exact = appname, apps__release__exact = release, apps__ver__exact = version):
 		groupslist.append({'name': group.name, 'desc': group.desc})
 	
-	return HttpResponse(simplejson.dumps(groupslist), mimetype='application/javascript')
+	return HttpResponse(simplejson.dumps(groupslist), content_type='application/javascript')
 
 	
 	
@@ -685,7 +782,7 @@ def add_group(request):
 	cache.delete('clientjson')
     
 	# Add the group to the database if it does not already exist
-	group_q = Group.objects.filter(name__exact = request.POST['group'])
+	group_q = Group.objects.filter(name__exact = request.POST.get("group"))
 	if len(group_q) > 0:
 		group = group_q.all()[0]
 		group.desc = request.POST['desc']
@@ -719,7 +816,8 @@ def add_group(request):
 			#	removeAppFromGroup(group, a)
 
 	
-	return HttpResponse('')
+	# return HttpResponse('')
+	return HttpResponseRedirect("/groups/")
 	
 @login_required
 def delete_group(request):
@@ -770,21 +868,19 @@ def getAppReleases(request, appname):
 	releaselist = list()
 	apps = App.objects.filter(name__exact = appname)
 	for a in apps:
-		rel = {'release' : a.release}
-		if (rel not in releaselist):
-			releaselist.append(rel)
+		if a.release not in releaselist:
+			releaselist.append(a.release)
 		
 	
-	return HttpResponse(simplejson.dumps(releaselist), mimetype='application/javascript')
+	return render_to_response('show_application_releases.html',{"releaselist": releaselist,"appname":appname})
 	
 @login_required
 def getReleaseVersions(request, appname, release):
-	verlist = list()
+	versionlist = list()
 	apps = App.objects.filter(name__exact = appname, release__exact = release)
 	for a in apps:
-		verlist.append({'version' : a.ver})
-	
-	return HttpResponse(simplejson.dumps(verlist), mimetype='application/javascript')
+		versionlist.append(a.ver)
+	return render_to_response('show_application_versions.html',{"versionlist": versionlist})
 
 @login_required
 def batchEditClients(request, validated):
@@ -878,7 +974,7 @@ def getAppDetails(request):
 						 'release': app.release,
 						 'name': app.name}
 	
-	return HttpResponse(simplejson.dumps(details), mimetype='application/javascript')
+	return HttpResponse(simplejson.dumps(details), content_type='application/javascript')
 	
 #@login_required
 def add_user(request, imei):

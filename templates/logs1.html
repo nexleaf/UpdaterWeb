@@ -20,6 +20,7 @@
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -39,14 +40,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">Updater Web</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
+            <li><a href="/logout">Signout</a></li>
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
@@ -59,15 +57,15 @@
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a href="/clients">Clients</a></li>
-            <li><a href="/groups">Groups</a></li>
-            <li><a href="/applications">Applications</a></li>
-            <li class="active"><a href="/logs">Logs <span class="sr-only">(current)</span></a></li>
+            <li><a href="/clients"><i class=" fa fa-mobile"></i> &nbsp;Clients</a></li>
+            <li><a href="/groups"><i class=" fa fa-users"></i> &nbsp;Groups</a></li>
+            <li><a href="/applications"><i class=" fa fa-th"></i> &nbsp;Applications</a></li>
+            <li class="active"><a href="/logs"><i class=" fa fa-pencil"></i> &nbsp;Logs <span class="sr-only">(current)</span></a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           
-          <h2 class="sub-header">Section title</h2>
+          <h2 class="sub-header">Logs</h2>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>

@@ -1,0 +1,14 @@
+{% for g in grouplist %}
+  <div class="col-md-2 portfolio-item">
+          <div class="group-div">
+            <a href="/getGroupClients/{{g.name}}">
+              <h5 class="group-h3">{{g.name}}</h5>
+            </a>
+            </br>
+            <i class=" fa fa-th"></i> {{g.app_count}}
+            &nbsp;
+            <i class=" fa fa-mobile"></i> {{g.user_count}}
+          </div>    
+  
+  </div>
+{% endfor %}

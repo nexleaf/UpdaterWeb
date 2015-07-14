@@ -24,9 +24,14 @@ class UserIndex(indexes.SearchIndex, indexes.Indexable):
 	
 	phone_tags = indexes.CharField()
 	manual_tags = indexes.CharField()
+	content_auto = indexes.EdgeNgramField(model_attr='imei')
 	
 	def get_model(self):
-		return UserIndex
+		return User
+
+	def index_queryset(self, using=None):
+		"""Used when the entire index for model is updated"""
+		return self.get_model().objects.all()
 	
 	def prepare_phone_tags(self, object):
 		parsed = '\n'

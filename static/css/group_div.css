@@ -1,0 +1,11 @@
+.group-div {
+    background-color:#eeeeee;
+    height:100px;
+    width:140px;
+    padding:5px; 
+    text-align: center;
+}
+.group-h3{
+	text-align:center;
+	word-wrap: break-word
+}

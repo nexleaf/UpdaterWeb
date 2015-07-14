@@ -123,14 +123,18 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whoosh',
     'haystack',
     'uapp',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'widget_tweaks',
+    'crispy_forms',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 HAYSTACK_CONNECTIONS = {
     'default': {

@@ -19,7 +19,6 @@
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -29,7 +28,6 @@
   </head>
 
   <body>
-
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -39,14 +37,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Project name</a>
+          <a class="navbar-brand" href="#">Updater Web</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Dashboard</a></li>
-            <li><a href="#">Settings</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
+            <li><a href="/logout">Signout</a></li>
           </ul>
           <form class="navbar-form navbar-right">
             <input type="text" class="form-control" placeholder="Search...">
@@ -67,131 +62,16 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           
-          <h2 class="sub-header">Section title</h2>
+          <h2 class="sub-header">Clients</h2>
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-striped " style="border-collapse:collapse;">
               <thead>
                 <tr>
-                  <th>S. No.</th>
-                  <th>IMEI</th>
-                  <th>User Applications</th>
-                  <th>Group Applications</th>
                   <th>Group</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td>1,001</td>
-                  <td>Lorem</td>
-                  <td>ipsum</td>
-                  <td>dolor</td>
-                  <td>sit</td>
-                </tr>
-                <tr>
-                  <td>1,002</td>
-                  <td>amet</td>
-                  <td>consectetur</td>
-                  <td>adipiscing</td>
-                  <td>elit</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>Integer</td>
-                  <td>nec</td>
-                  <td>odio</td>
-                  <td>Praesent</td>
-                </tr>
-                <tr>
-                  <td>1,003</td>
-                  <td>libero</td>
-                  <td>Sed</td>
-                  <td>cursus</td>
-                  <td>ante</td>
-                </tr>
-                <tr>
-                  <td>1,004</td>
-                  <td>dapibus</td>
-                  <td>diam</td>
-                  <td>Sed</td>
-                  <td>nisi</td>
-                </tr>
-                <tr>
-                  <td>1,005</td>
-                  <td>Nulla</td>
-                  <td>quis</td>
-                  <td>sem</td>
-                  <td>at</td>
-                </tr>
-                <tr>
-                  <td>1,006</td>
-                  <td>nibh</td>
-                  <td>elementum</td>
-                  <td>imperdiet</td>
-                  <td>Duis</td>
-                </tr>
-                <tr>
-                  <td>1,007</td>
-                  <td>sagittis</td>
-                  <td>ipsum</td>
-                  <td>Praesent</td>
-                  <td>mauris</td>
-                </tr>
-                <tr>
-                  <td>1,008</td>
-                  <td>Fusce</td>
-                  <td>nec</td>
-                  <td>tellus</td>
-                  <td>sed</td>
-                </tr>
-                <tr>
-                  <td>1,009</td>
-                  <td>augue</td>
-                  <td>semper</td>
-                  <td>porta</td>
-                  <td>Mauris</td>
-                </tr>
-                <tr>
-                  <td>1,010</td>
-                  <td>massa</td>
-                  <td>Vestibulum</td>
-                  <td>lacinia</td>
-                  <td>arcu</td>
-                </tr>
-                <tr>
-                  <td>1,011</td>
-                  <td>eget</td>
-                  <td>nulla</td>
-                  <td>Class</td>
-                  <td>aptent</td>
-                </tr>
-                <tr>
-                  <td>1,012</td>
-                  <td>taciti</td>
-                  <td>sociosqu</td>
-                  <td>ad</td>
-                  <td>litora</td>
-                </tr>
-                <tr>
-                  <td>1,013</td>
-                  <td>torquent</td>
-                  <td>per</td>
-                  <td>conubia</td>
-                  <td>nostra</td>
-                </tr>
-                <tr>
-                  <td>1,014</td>
-                  <td>per</td>
-                  <td>inceptos</td>
-                  <td>himenaeos</td>
-                  <td>Curabitur</td>
-                </tr>
-                <tr>
-                  <td>1,015</td>
-                  <td>sodales</td>
-                  <td>ligula</td>
-                  <td>in</td>
-                  <td>libero</td>
-                </tr>
+                
               </tbody>
             </table>
           </div>
@@ -203,10 +83,54 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="../../assets/js/vendor/holder.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script>
+      var group_data = {{ json|safe }}
+      for( var i=0;i<group_data.length;i++){
+        var group = group_data[i];
+        var name = group['name']
+        $("tbody").append(
+          // '<div id ="group'+name+'">'+
+            '<tr  data-toggle="collapse" data-target="#'+name+'" class="accordion-toggle group-class" id="'+name+'">'+
+              '<td>'+name+'</td>'+
+            '</tr>');//+
+      }
+      $('.group-class').click(function() {
+        var $thisElement = $(this);
+        var id = $(this).attr("id");
+        var clicks = $(this).data('clicks');
+        if (clicks) {
+        // alert('odd number of clicks');
+          $.get("/uapp/getGroupClients/"+id, function(data, status){
+            var clientsData = JSON.parse(data);
+            for(var i=0;i<clientsData.length;i++){
+              $thisElement.after('<tr class="tr'+id+'"><td colspan="6" class="hiddenRow"><div id="demo1"> '+clientsData[i]+' </div> </td></tr>')
+            }
+          });
+          // $(this).after('<tr id="tr'+id+'"><td colspan="6" class="hiddenRow"><div id="demo1"> Demo1 </div> </td></tr>')
+        } else {
+        // alert('even number of clicks');
+          $(".tr"+id).remove();
+        }
+        $(this).data("clicks", !clicks);
+      });
+      function getClients(name){
+        $.get("/uapp/getGroupClients/"+name, function(data, status){
+          var clientsData = JSON.parse(data);
+          console.log(clientsData);
+          for(var i=0;i<clientsData.length;i++){
+            console.log(clientsData[i])
+            $("#group"+name).after(
+            '<tr>'+
+              '<div id="'+name+'">'+
+                '<td>'+
+                  clientsData[i]+
+                '</td>'+
+              '</div>'+
+            '</tr>');
+          }
+          // alert("Data: " + data + "\nStatus: " + status);
+        });
+      }
+    </script>
   </body>
 </html>

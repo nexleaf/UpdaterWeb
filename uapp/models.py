@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.forms import ModelForm
 # Create your models here.
 class App (models.Model):
     name = models.CharField(max_length=100)
@@ -34,6 +34,7 @@ class Group (models.Model):
     name = models.CharField(max_length=20)
     desc = models.TextField(default='')
     apps = models.ManyToManyField('App')
+    
 
 class Logs (models.Model):
     imei = models.CharField(max_length=20)
