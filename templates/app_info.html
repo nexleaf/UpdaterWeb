@@ -1,0 +1,27 @@
+<form role="form" id="appInfoForm" action="/edit_app/" method="post">
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input type="text" class="form-control" id="name" name="name" value="{{app.name}}">
+  </div>
+    <input type="hidden" class="form-control" id="imei_hidden" name="imei_hidden" value="{{user.imei}}">
+  <div class="form-group">
+    <label for="release">Release:</label>
+    <input type="text" class="form-control" id="release" name="release" value="{{app.release}}">
+  </div>
+  <div class="form-group">
+    <label for="version">Version:</label>
+    <input type="text" class="form-control" id="version" name="version" value="{{app.ver}}">
+  </div>
+  <div class="form-group">
+    <label for="package">Package:</label>
+    <input type="text" class="form-control" id="package" name="package" value="{{app.package}}">
+  </div>
+  <div class="form-group">
+    <label for="url">URL:</label>
+    <input type="text" class="form-control" id="url" name="url" value="{{app.url}}">
+  </div>
+  <div class="form-group">
+    <label for="action">Action:</label>
+    <input type="text" class="form-control" id="action" name="action" value="{{app.action}}">
+  </div>
+  

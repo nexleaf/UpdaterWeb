@@ -78,7 +78,7 @@
           <div class="row" id="result">
           {% for u in user_list %}
             <div class="col-md-2 portfolio-item">
-                <a href="#" data-toggle="modal" data-target="#clientInfo">
+                <a href="#" class="client_details_anchor" data-toggle="modal" data-target="#clientInfo" data-imei="{{u.imei}}">
                     <div class="group-div">
                       <h5 class="group-h3">{{u.imei}}</h5>
                     </div>
@@ -92,24 +92,22 @@
       </div>
     </div>
     <div id="clientInfo" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <p>Some text in the modal.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Modal Header</h4>
+          </div>
+          <div class="modal-body" id="client_info">
+            <p>Some text in the modal.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal">Update</button>
+          </div>
+        </div>
       </div>
     </div>
-
-  </div>
-</div>
 
     <!-- /.container -->
 
@@ -135,9 +133,29 @@
       });
     });
       
-      function searchSuccess(data, textStatus, jqXHR){
-        $("#result").html(data);
-      } 
+      
+    $(".client_details_anchor").click(function(){
+      var imei = $(this).data('imei');
+      $.ajax({
+        type: "GET",
+        url:"/client_details/",
+        data: {
+          imei:imei 
+        },
+        dataType: "html",
+        success: function(data){
+          // console.log(data);
+          $("#client_info").html(data);
+        }
+      });
+    });
+        // $.get("/group_details/",{groupname:name},function(data){
+        //     console.log(",jhkj"+data);
+        //   });
+    function searchSuccess(){
+      
+    }
+
     </script>
 
     

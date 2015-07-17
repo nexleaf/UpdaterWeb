@@ -78,7 +78,7 @@
           <div class="row">
           {% for v in versionlist %}
             <div class="col-md-2 portfolio-item">
-            <a href="#" data-toggle="modal" data-target="#versionInfo">
+            <a href="#" data-toggle="modal" data-target="#versionInfo" class="app_details_anchor" data-name="{{app_name}}" data-release="{{release}}" data-version="{{v}}">
                     <div class="group-div">
                       <h5 class="group-h3">version: {{v}}</h5>
                     </div>    
@@ -100,11 +100,12 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Modal Header</h4>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="version_info">
         <p>Some text in the modal.</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteApp();">Delete</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" onclick="updateApp()">update</button>
       </div>
     </div>
 
@@ -119,13 +120,38 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script>
-    // $(".group-h3").click(function(){
-    //   $.get("/getGroupClients/"+$(this).text(), function(data, status){
-    //     // alert("Data: " + data + "\nStatus: " + status);
-    //     $(".main").html(data);
-    // });
-    // })
-    </script
+      var name, release, version;
+      $(".app_details_anchor").click(function(){
+        name = $(this).data('name');
+        release = $(this).data('release');
+        version = $(this).data('version');
+        
+        $.ajax({
+          type: "GET",
+          url:"/app_details/",
+          data: {
+            name:name,
+            release:release,
+            version:version 
+          },
+          dataType: "html",
+          success: function(data){
+            // console.log(data);
+            $("#version_info").html(data);
+          }
+        });
+      });
+
+      function deleteApp(){
+        $.post("/apps/delete/",{name:name,release:release,version:version},function(data){
+          location.reload();
+        })
+      } 
+      function updateApp(){
+        
+      }
+    </script>
+      
 
 </body>
 

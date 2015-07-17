@@ -21,15 +21,10 @@ class User (models.Model):
     # These are apps not inherited from the group
     user_apps = models.ManyToManyField('App')
 
-    phone_tags = models.TextField(default='[]')
-    manual_tags = models.TextField(default='[]')
-    
     # Inventory Information
-    locked_inventory = models.BooleanField()
     simid = models.CharField(max_length=40)
     phone = models.CharField(max_length=40)
-    assettag = models.CharField(max_length=40)
-
+    
 class Group (models.Model):
     name = models.CharField(max_length=20)
     desc = models.TextField(default='')

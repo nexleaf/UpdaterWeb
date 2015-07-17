@@ -1,27 +1,37 @@
-<form class="form-horizontal">
+<form role="form" id="clientInfoForm" action="/edit_client/" method="post">
   <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">IMEI</label>
-    <!-- <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputEmail3" placeholder="Imei" value = '{{user_info}}'>
-    </div>
-  </div> -->
+    <label for="imei">IMEI:</label>
+    <input type="text" class="form-control" id="group_name" name="imei" value="{{user.imei}}">
+  </div>
+    <input type="hidden" class="form-control" id="imei_hidden" name="imei_hidden" value="{{user.imei}}">
   <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">Group</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputEmail3" placeholder="Group Name" value = "{{user.group.all()[0].name}}">
-    </div>
+    <label for="group_name">Group:</label>
+    <input type="text" class="form-control" id="group_name" name="group_name" value="{{group_name}}">
   </div>
   <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">Phone</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputEmail3" placeholder="Phone Number" value = "{{user.phone}}">
-    </div>
+    <label for="phone_no">Phone Number:</label>
+    <input type="text" class="form-control" id="phone_no" name="phone_no" value="{{user.phone}}">
   </div>
   <div class="form-group">
-    <label for="inputEmail3" class="col-sm-2 control-label">Sim Id</label>
-    <div class="col-sm-10">
-      <input type="text" class="form-control" id="inputEmail3" placeholder="Sim ID" value = "{{user.simid}}">
-    </div>
+    <label for="sim_id">Sim ID:</label>
+    <input type="text" class="form-control" id="sim_id" name="sim_id" value="{{user.simid}}">
   </div>
-  
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Release</th>
+        <th>Version</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for app in apps%}
+      <tr>
+        <td>{{app.name}}</td>
+        <td>{{app.release}}</td>
+        <td>{{app.ver}}</td>
+      </tr>
+      {%endfor%}
+    </tbody>
+</table>
 </form>

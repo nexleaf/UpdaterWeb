@@ -1,0 +1,56 @@
+{% load staticfiles %}
+
+<form role="form" id="groupInfoForm" action="/edit_group/" method="post">
+  <div class="form-group">
+    <label for="group_name">Name:</label>
+    <input type="text" class="form-control" id="group_name" name="group" value="{{group.name}}">
+  </div>
+    <input type="hidden" class="form-control" id="group_name_hidden" name="group_name_hidden" value="{{group.name}}">
+  <div class="form-group">
+    <label for="group_desc">Description:</label>
+    <input type="text" class="form-control" id="group_desc" name="desc" value="{{group.desc}}">
+  </div>
+  <div id="app_list_div" style="height: 300px; overflow-y: scroll;">
+
+  <!-- <table data-url="data1.json" data-height="299" data-sort-name="name" data-sort-order="desc">
+    <thead>
+        <tr>
+            <th data-field="id" data-align="right" data-sortable="true">Name</th>
+            <th data-field="name" data-align="center" data-sortable="true">Release</th>
+            <th data-field="price" data-sortable="true">Version</th>
+        </tr>
+    </thead>
+    <tbody>
+      {% for app in apps%}
+        <tr id="{{app.name}}_{{app.release}}_{{app.ver}}" class="tr-class-1">
+            <td id="td_id_1" class="td-class-1">{{app.name}}</td>
+            <td>{{app.release}}</td>
+            <td>{{app.ver}}</td>
+        </tr>
+      {%endfor%}
+      </tbody>
+  </table> -->
+  <table> <!-- bootstrap classes added by the uitheme widget -->
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Release</th>
+      <th>Version</th>
+  </thead>
+  <tbody>
+    {% for app in apps%}
+      <tr><td> <input type="checkbox" name="{{app.package}}({{app.release}},{{app.ver}})" value="off" class="app_checkbox" />&nbsp;{{app.name}}</td><td>{{app.release}}</td><td>{{app.ver}}</td></tr>
+    {%endfor%}
+    </tbody>
+</table>
+  </div>
+
+  <!-- <button type="submit" class="btn btn-default">Submit</button> -->
+</form>
+    <script src="{% static 'js/jquery.tablesorter.js' %}"></script>
+
+<!-- tablesorter widget file - loaded after the plugin -->
+<script src="{% static 'js/jquery.tablesorter.widgets.js' %}"></script>
+
+<!-- pager plugin -->
+<script src="{% static 'js/sorting.js' %}"></script>

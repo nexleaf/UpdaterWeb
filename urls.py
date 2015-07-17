@@ -10,7 +10,7 @@ import uapp
 
 urlpatterns = patterns('uapp.views',
 	(r'^uapp/add_app/(?P<app_str>\w*)$', 'add_app'),
-	(r'^uapp/add_user/(?P<imei>\w*)$', 'add_user'),
+	(r'^add_user/', 'add_user'),
 	(r'^uapp/listClients/$', 'listClients'),
 	(r'^uapp/listApps/$', 'listApps'),
 	(r'^uapp/listAppNames/$', 'listAppNames'),
@@ -21,11 +21,18 @@ urlpatterns = patterns('uapp.views',
 	(r'^uapp/deleteClients/$', 'deleteClients'),
 	(r'^uapp/getGroupApps/(?P<groupname>\w*)$', 'getGroupApps'),
 	(r'^getGroupClients/(?P<groupname>\w*)$', 'getGroupClients'),
+	(r'^getClientInfo/(?P<imei>\w*)$', 'getClientInfo'),
+	
 	
 	(r'^add_group/$', 'add_group'),
+	(r'^edit_group/$', 'edit_group'),
+	(r'^edit_client/$', 'edit_client'),
 	(r'^group_details/(?P<groupname>\w*)$', 'group_details'),
+	(r'^client_details/(?P<imei>\w*)$', 'client_details'),
+	(r'^app_details/', 'app_details'),
 	
-	(r'^uapp/delete_group/$', 'delete_group'),
+	(r'^groups/delete/$', 'delete_group'),
+	(r'^apps/delete/$', 'delete_app_version'),
 	(r'^uapp/delete_app_version/$', 'delete_app_version'),
 	(r'^getAppReleases/(?P<appname>\w*)$', 'getAppReleases'),
 	(r'^getReleaseVersions/(?P<appname>\w*)/(?P<release>[a-zA-Z0-9_\-.]*)$', 'getReleaseVersions'),
