@@ -1,61 +1,7 @@
+{% extends "base_template.html"%}
+{%block body%}
+{% load crispy_forms_tags %}
 {% load staticfiles %}
-
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>4 Col Portfolio - Start Bootstrap Template</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="{% static 'css/4-col-portfolio.css' %}" rel="stylesheet">
-<link href="{% static 'css/dashboard.css' %}" rel="stylesheet">
-<link href="{% static 'css/group_div.css' %}" rel="stylesheet">
-<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-</head>
-
-<body>
-
-    <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">Updater Web</a>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/logout">Signout</a></li>
-          </ul>
-          <form class="navbar-form navbar-right">
-            <input type="text" class="form-control" placeholder="Search...">
-          </form>
-        </div>
-      </div>
-    </nav>
 
     <!-- Page Content -->
     <div class="container-fluid">
@@ -64,14 +10,18 @@
           <ul class="nav nav-sidebar">
             <li><a href="/clients"><i class=" fa fa-mobile"></i> &nbsp;Clients</a></li>
             <li><a href="/groups"><i class=" fa fa-users"></i> &nbsp;Groups</a></li>
-            <li class="active"><a href="/applications"><i class=" fa fa-th"></i> &nbsp;Applications <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="/apps"><i class=" fa fa-th"></i> &nbsp;Applications <span class="sr-only">(current)</span></a></li>
             <li><a href="/logs"><i class=" fa fa-pencil"></i> &nbsp;Logs</a></li>
+            <li><a href="/global"><i class=" fa fa-globe"></i> &nbsp;Global</a></li>
+            
           </ul>
         </div>
         <div class ="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <div class="row">
               <div class="col-lg-12">
                   <h1 class="page-header">Versions
+                    <button type="button" class="btn btn-primary"  data-toggle="modal" data-target="#newVersion">Create a new Version</button>
+
                   </h1>
               </div>
           </div>
@@ -81,12 +31,12 @@
             <a href="#" data-toggle="modal" data-target="#versionInfo" class="app_details_anchor" data-name="{{app_name}}" data-release="{{release}}" data-version="{{v}}">
                     <div class="group-div">
                       <h5 class="group-h3">version: {{v}}</h5>
-                    </div>    
+                    </div>
             </a>
             </div>
           {% endfor %}
-            
-            
+
+
           </div>
         </div>
       </div>
@@ -98,14 +48,40 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
+        <h4 class="modal-title">Edit Version</h4>
       </div>
       <div class="modal-body" id="version_info">
-        <p>Some text in the modal.</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="deleteApp();">Delete</button>
         <button type="button" class="btn btn-success" data-dismiss="modal" onclick="updateApp()">update</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<div id="newVersion" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">New Version</h4>
+      </div>
+      <div class="modal-body">
+        <form action="/apps/add_version" id="add_version_form" method="post">
+        <input type="hidden" name="app_name" value="{{app_name}}">
+        <input type="hidden" name="release" value="{{release}}">
+
+        {% block content %}
+        {% crispy form %}
+        {% endblock %}
+      </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-success" data-dismiss="modal" onclick="$('#add_version_form').submit();">Submit</button>
       </div>
     </div>
 
@@ -116,7 +92,7 @@
 
     <!-- jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    
+
     <!-- Bootstrap Core JavaScript -->
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script>
@@ -125,14 +101,14 @@
         name = $(this).data('name');
         release = $(this).data('release');
         version = $(this).data('version');
-        
+
         $.ajax({
           type: "GET",
-          url:"/app_details/",
+          url:"/apps/details/",
           data: {
             name:name,
             release:release,
-            version:version 
+            version:version
           },
           dataType: "html",
           success: function(data){
@@ -146,13 +122,9 @@
         $.post("/apps/delete/",{name:name,release:release,version:version},function(data){
           location.reload();
         })
-      } 
+      }
       function updateApp(){
-        
+        $("#appInfoForm").submit();
       }
     </script>
-      
-
-</body>
-
-</html>
+{%endblock%}
