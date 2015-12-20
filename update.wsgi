@@ -25,7 +25,7 @@ import sys
 # if running multiple sites in the same mod_wsgi process. To fix this, use
 # mod_wsgi daemon mode with each site in its own daemon process, or use
 # os.environ["DJANGO_SETTINGS_MODULE"] = "dataportal.settings"
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "CENSUpdaterServer.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "settings")
 
 # This application object is used by any WSGI server configured to use this
 # file. This includes Django's development server, if the WSGI_APPLICATION
@@ -38,10 +38,10 @@ application = get_wsgi_application()
 # application = HelloWorldApplication(application)
 
 
-os.environ['UPDATER_DEPLOY_ROOT'] = '/var/www/updater'
+os.environ['UPDATER_DEPLOY_ROOT'] = '/var/www/updater2'
 
-mypath = [os.getenv('UPDATER_DEPLOY_ROOT') + '/CENSUpdaterServer']
+mypath = [os.getenv('UPDATER_DEPLOY_ROOT') + '/UpdaterServer']
 
 for p in mypath:
-    if p not in sys.path:	
+    if p not in sys.path:
         sys.path.append(p)

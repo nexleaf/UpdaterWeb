@@ -1,0 +1,123 @@
+{%extends "base_template.html"%}
+{%block body%}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="/clients"><i class=" fa fa-mobile"></i> &nbsp;Clients</a></li>
+            <li><a href="/groups"><i class=" fa fa-users"></i> &nbsp;Groups</a></li>
+            <li><a href="/apps"><i class=" fa fa-th"></i> &nbsp;Applications</a></li>
+            <li class="active"><a href="/logs"><i class=" fa fa-pencil"></i> &nbsp;Logs <span class="sr-only">(current)</span></a></li>
+            <li><a href="/global"><i class=" fa fa-globe"></i> &nbsp;Global</a></li>
+            
+          </ul>
+        </div>
+        <div class ="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div class="row">
+              <div class="col-lg-12">
+                  <h1 class="page-header">Clients
+                  </h1>
+              </div>
+          </div>
+          <div class="row" id="result">
+          {% for u in clients %}
+            <div class="col-md-2 portfolio-item">
+                <a href="/client_logs/{{u.imei}}" class="client_logs_anchor" data-imei="{{u.imei}}">
+                    <div class="group-div">
+                      <h5 class="group-h3">{{u.imei}}</h5>
+                    </div>
+
+
+                </a>
+            </div>
+          {% endfor %}
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="clientInfo" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Edit Client</h4>
+          </div>
+          <div class="modal-body" id="client_info">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal">Delete</button>
+            <button type="button" class="btn btn-success" data-dismiss="modal">Update</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- /.container -->
+
+    <!-- jQuery -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+
+<script>
+    $(function(){
+      $("#search").keyup(function(){
+        $.ajax({
+          type:"POST",
+          url:"/clients/search/imeis",
+          data:{
+            "search_text":$("#search").val()
+            // "csrfmiddlewaretoken":$("input[name=csrfmiddlewaretoken]").val()
+          },
+          success: searchSuccess,
+          dataType: 'html'
+        });
+      });
+    });
+
+
+    $(".client_logs_anchor").click(function(){
+      var imei = $(this).data('imei');
+      $.ajax({
+        type: "GET",
+        url:"/client_logs_details/",
+        data: {
+          imei:imei
+        },
+        dataType: "html",
+        success: function(data){
+          // console.log(data);
+          $("#client_info").html(data);
+        }
+      });
+    });
+
+    function get_client_logs(imei){
+      $.ajax({
+        type: "GET",
+        url:"/client_logs_details/",
+        data: {
+          imei:imei
+        },
+        dataType: "html",
+        success: function(data){
+          // console.log(data);
+          $("#result").html(data);
+        }
+      });
+
+    }
+        // $.get("/group_details/",{groupname:name},function(data){
+        //     console.log(",jhkj"+data);
+        //   });
+    function searchSuccess(){
+
+    }
+
+    </script>
+{%endblock%}

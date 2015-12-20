@@ -1,0 +1,26 @@
+{%load apptags %}
+{%load endless%}
+<table class="table table-bordered">
+  <thead>
+    <tr>
+      <th>Package</th>
+      <th>Time</th>
+      <th colspan="2">Version</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for index,log in logs%}
+    <tr>
+
+      <td rowspan="{{ package_count|lookup:index }}">{{log.imei}}</td>
+      <td rowspan="{{ package_count|lookup:index }}">{{log.access}}</td>
+    </tr>
+        {% for name, value in log.packages %}
+          <tr>
+            <td>{{name}}</td>
+            <td>{{value}}</td>
+          </tr>
+        {% endfor %}
+    {%endfor%}
+  </tbody>
+</table>

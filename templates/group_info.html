@@ -1,6 +1,6 @@
 {% load staticfiles %}
 
-<form role="form" id="groupInfoForm" action="/edit_group/" method="post">
+<form role="form" id="groupInfoForm" action="/groups/edit/" method="post">
   <div class="form-group">
     <label for="group_name">Name:</label>
     <input type="text" class="form-control" id="group_name" name="group" value="{{group.name}}">
@@ -9,6 +9,10 @@
   <div class="form-group">
     <label for="group_desc">Description:</label>
     <input type="text" class="form-control" id="group_desc" name="desc" value="{{group.desc}}">
+  </div>
+  <div class="form-group">
+    <label for="group_jitter">Jitter:</label>
+    <input type="text" class="form-control" id="group_jitter" name="jitter" value="{{group.jitter}}">
   </div>
   <div id="app_list_div" style="height: 300px; overflow-y: scroll;">
 
@@ -39,7 +43,11 @@
   </thead>
   <tbody>
     {% for app in apps%}
-      <tr><td> <input type="checkbox" name="{{app.package}}({{app.release}},{{app.ver}})" value="off" class="app_checkbox" />&nbsp;{{app.name}}</td><td>{{app.release}}</td><td>{{app.ver}}</td></tr>
+      {%if app.name in group_apps%} 
+        <tr><td> <input type="checkbox" name="{{app.package}}({{app.release}},{{app.ver}})" value="on" class="app_checkbox" checked />&nbsp;{{app.name}}</td><td>{{app.release}}</td><td>{{app.ver}}</td></tr>
+      {%else%} 
+        <tr><td> <input type="checkbox" name="{{app.package}}({{app.release}},{{app.ver}})" value="off" class="app_checkbox" />&nbsp;{{app.name}}</td><td>{{app.release}}</td><td>{{app.ver}}</td></tr>
+      {%endif%}
     {%endfor%}
     </tbody>
 </table>

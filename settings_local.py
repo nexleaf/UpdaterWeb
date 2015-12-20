@@ -1,5 +1,6 @@
 import os
 # Django settings for uproject project.
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -13,9 +14,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'updates',                      # Or path to database file if using sqlite3.
-        'USER': 'root',                      # Not used with sqlite3.
-        'PASSWORD': '1234',                  # Not used with sqlite3.
+        'NAME': 'censupdate',                      # Or path to database file if using sqlite3.
+        'USER': 'censupdate',                      # Not used with sqlite3.
+        'PASSWORD': '9KcrH6Zp87UDtuyT',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
@@ -125,13 +126,20 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'whoosh',
     'haystack',
+    #'UpdaterServer.uapp',
     'uapp',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     'widget_tweaks',
     'crispy_forms',
+    'endless_pagination',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'django.core.context_processors.request',
+    'django.contrib.messages.context_processors.messages',
 )
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -144,7 +152,8 @@ HAYSTACK_CONNECTIONS = {
 }
 HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
 
-LOGIN_URL = '/updater/uapp/login/'
+LOGIN_URL = '/login/'
 LOGOUT_URL = '/updater/uapp/logout/'
 LOGIN_REDIRECT_URL = '/updater/media/updater/'
 CACHE_BACKEND = 'db://listclient_cache'
+
