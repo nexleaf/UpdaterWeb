@@ -443,14 +443,21 @@ def listClients(request):
 			uapps = uapps[:-2]
 			
 			gapps = ""
-			for i in u.group.all()[0].apps.all():
-				gapps = gapps + i.name + "(" + i.release + ":" + str(i.ver) + ")" + ", "
-			gapps = gapps[:-2]
+			if u.group.all().count() > 0:
+			    group_name = u.group.all()[0].name
+			    for i in u.group.all()[0].apps.all():
+				    gapps = gapps + i.name + "(" + i.release + ":" + str(i.ver) + ")" + ", "
+
+			    if len(gapps) > 0:
+				    gapps = gapps[:-2]
+			else:
+			    group_name = ''
+
 			
 			udict = {   'imei' : u.imei,
 						'user_applications' : uapps,
 						'group_applications' : gapps,
-						'group' : u.group.all()[0].name,
+						'group' : group_name,
 						'phone_tags' : u.phone_tags,
 						'manual_tags' : u.manual_tags,
 						'asset_tag' : u.assettag,
